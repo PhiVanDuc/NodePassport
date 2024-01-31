@@ -7,7 +7,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.belongsTo(models.Provider, {
         foreignKey: "provider_id",
-      })
+      });
+
+      User.belongsToMany(models.Role, {
+        foreignKey: 'user_id',
+        through: 'user_role',
+      });
     }
   }
   User.init(
@@ -32,9 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       status: {
         type: DataTypes.BOOLEAN,
       },
-      token: {
-        type: DataTypes.TEXT,
-      }
     }, 
     {
       sequelize,

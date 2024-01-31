@@ -4,47 +4,50 @@ const { User, Provider } = require('../models/index');
 module.exports = new GoogleStrategy({
     clientID: "544176344342-o9vnp0c4c27hmmnaso9u27hdv2pdnqvr.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://node-passport.vercel.app/auth/google/callback",
+    callbackURL: "http://localhost:3000/auth/google/callback",
     scope: ['profile', 'email'],
   },
   async function(request, accessToken, refreshToken, profile, done) {
-    const info = profile._json;
+    const { displayName, email } = profile;
 
-    let user = await User.findOne({
+    const [provider] = await Provider.findOrCreate({
       where: {
-        email: info.email,
+        name: 'google'
       },
-      include:{
-        model: Provider,
-        where: {
-          name: 'google'
-        }
+      defaults: {
+        name: 'google'
       }
     });
 
-    if (!user) {
-      await Provider.create({
-        name: 'google'
+    if (!provider) {
+      return done(null, false, {
+        message: 'Provider không tồn tại!',
       });
+    }
 
-      const id = await Provider.max('id');
-      await User.create({
-        provider_id: +id,
-        name: info.name,
-        email: info.email,
-        status: true,
-      });
-
-      user = await User.findOne({
-        where: {
-          email: info.email,
-        },
-        include:{
+    const [user] = await User.findOrCreate({
+      where: {
+        email,
+      },
+      include: [
+        {
           model: Provider,
           where: {
             name: 'google'
           }
         }
+      ],
+      defaults: {
+        provider_id: provider.id,
+        name: displayName,
+        email,
+        status: true
+      }
+    });
+
+    if (!user) {
+      return done(null, false, {
+        message: 'Đã có lỗi xảy ra!',
       });
     }
     

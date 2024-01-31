@@ -1,0 +1,31 @@
+<div class="d-flex align-items-center justify-content-between mb-5">
+    <h2 >Phân quyền</h2>
+    <a href="/manage_user" class="btn btn-primary">Quay lại</a>
+</div>
+
+<form action="<%= `/author_user/${id}` %>" method="post">
+    <table class="table table-bordered mb-3">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Vai trò</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% roles.forEach(role => { %>
+                <% 
+                    let isChecked;
+                    if (user['Roles'].length)
+                        isChecked = user['Roles'].find((element) => element.name === role.name);
+                %>
+                <tr>
+                    <td><input type="checkbox" name="role" value="<%= role.name %>" <%= isChecked ? 'checked' : '' %>></td>
+                    <td><%= role.name %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary">Lưu thay đổi</button>
+</form>

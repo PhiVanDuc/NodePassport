@@ -1,0 +1,50 @@
+<h2 class="mb-3">Quản lý vai trò</h2>
+<a href="/create_role" class="btn btn-primary mb-5">Thêm mới</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% roles.forEach(({ id, name }) => { %>
+            <tr>
+                <td><%= name %></td>
+                <td><a href=<%= `/update_role/${id}` %> class="btn btn-warning">Sửa</a></td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%= id %>">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa vai trò!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                Bạn đã chắc chắn muốn xóa?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-cancel" data-bs-dismiss="modal">Hủy</button>
+                <form action="" method="post" class="form-delete-role">
+                    <button class="btn btn-primary">Chấp nhận</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/pass_id.js"></script>

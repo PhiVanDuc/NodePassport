@@ -1,0 +1,97 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2>Cập nhật vai trò</h2>
+    <a href="/manage_role" class="btn btn-primary">Quay lại</a>
+</div>
+
+<% if (req.errors.name) { %>
+    <div class="alert alert-danger mb-5">
+        <%= req.errors.name %>
+    </div>
+<% } %>
+
+<div class="mb-5">
+    <label for="" class="mb-2">Chọn vai trò</label>
+    <select class="form-select">
+        <% roles.forEach(({ id, name }) => { %>
+            <option value=<%= id %> <%= +id === +id_param ? 'selected' : '' %>><%= name %></option>
+        <% }) %>
+    </select>
+</div>
+
+<form action="<%= `/update_role/${id_param}` %>" method="post">
+    <div class="form-group mb-3">
+        <label for="" class="mb-2">Tên</label>
+        <input type="text" name="name" placeholder="Tên..." class="form-control" value="<%= role.name %>">
+    </div>
+
+    <table class="table table-bordered mb-3">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th colspan="4">Quyền</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Quản lý người dùng</td>
+                <td>
+                    <input type="checkbox" name="permission" value="user_display" <% if (role['Permissions'].some(({value}) => value === "user_display")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Xem</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="user_create" <% if (role['Permissions'].some(({value}) => value === "user_create")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Thêm</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="user_edit" <% if (role['Permissions'].some(({value}) => value === "user_edit")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Sửa</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="user_delete" <% if (role['Permissions'].some(({value}) => value === "user_delete")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Xóa</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Quản lý vai trò</td>
+                <td>
+                    <input type="checkbox" name="permission" value="role_display" <% if (role['Permissions'].some(({value}) => value === "role_display")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Xem</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="role_create" <% if (role['Permissions'].some(({value}) => value === "role_create")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Thêm</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="role_edit" <% if (role['Permissions'].some(({value}) => value === "role_edit")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Sửa</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="permission" value="role_delete" <% if (role['Permissions'].some(({value}) => value === "role_delete")) { %>
+                        checked
+                    <% } %>>
+                    <label for="">Xóa</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary">Lưu thay đổi</button>
+</form>
+
+<script src="/javascripts/change_page.js"></script>

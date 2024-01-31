@@ -1,0 +1,28 @@
+<h2 class="mb-3">Quản lý người dùng</h2>
+<a href="" class="btn btn-primary mb-5">Thêm mới</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>Email</th>
+            <th>Phân quyền</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% users.forEach(({ id, name, email }, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td>
+                <td><%= name %></td>
+                <td><%= email %></td>
+                <td><a href="<%= `/author_user/${id}` %>" class="btn btn-success">Phân quyền</a></td>
+                <td><a href="" class="btn btn-warning">Sửa</a></td>
+                <td><a href="" class="btn btn-danger">Xóa</a></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

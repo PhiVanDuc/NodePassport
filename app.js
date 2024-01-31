@@ -11,7 +11,6 @@ const passportLocal = require('./passports/passport.local');
 const passportGoogle = require('./passports/passport.google');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const testOrmRouter = require('./routes/test_orm');
 const authRouter = require('./routes/auth');
 const authMiddleware = require('./middlewares/auth.middleware');
@@ -45,6 +44,7 @@ passport.use('google', passportGoogle);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressEjsLayouts);
+app.set('layout', 'layouts/layout');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -57,7 +57,6 @@ app.use('/auth', authRouter);
 app.use('/test_orm', testOrmRouter);
 app.use(authMiddleware);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

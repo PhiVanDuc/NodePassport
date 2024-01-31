@@ -13,6 +13,7 @@ module.exports = {
         const error = req.flash('error')[0];
         const changePass = req.flash('change-password')[0];
         return res.render('auth/login', {
+            layout: 'layouts/layout.ejs',
             error,
             changePass
         });
@@ -108,10 +109,10 @@ module.exports = {
                                     {
                                         model: Provider,
                                         where: {
-                                            name: "email"
+                                            name: 'email'
                                         }
                                     }
-                                ]
+                                ],
                             }
                         );
 

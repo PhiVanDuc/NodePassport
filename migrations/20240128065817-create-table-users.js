@@ -29,9 +29,6 @@ module.exports = {
       status: {
         type: Sequelize.BOOLEAN,
       },
-      token: {
-        type: Sequelize.TEXT,
-      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: new Date(),
