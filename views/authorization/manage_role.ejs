@@ -1,5 +1,5 @@
 <h2 class="mb-3">Quản lý vai trò</h2>
-<a href="/create_role" class="btn btn-primary mb-5">Thêm mới</a>
+<%- pers.role_create ? '<a href="/create_role" class="btn btn-primary mb-5">Thêm mới</a>' : '' %>
 
 <table class="table table-bordered">
     <thead>
@@ -14,11 +14,11 @@
         <% roles.forEach(({ id, name }) => { %>
             <tr>
                 <td><%= name %></td>
-                <td><a href=<%= `/update_role/${id}` %> class="btn btn-warning">Sửa</a></td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<%= id %>">
-                        Xóa
-                    </button>
+                    <%- pers.role_edit ? `<a href="/update_role/${id}" class="btn btn-warning">Sửa</a>` : '' %>
+                </td>
+                <td>
+                    <%- pers.role_delete ? `<button type="button" class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${id}">Xóa</button>` : '' %>
                 </td>
             </tr>
         <% }) %>

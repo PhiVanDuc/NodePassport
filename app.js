@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const testOrmRouter = require('./routes/test_orm');
 const authRouter = require('./routes/auth');
 const authMiddleware = require('./middlewares/auth.middleware');
+const authorMiddleware = require('./middlewares/author.middleware');
 const validateMiddleware = require('./middlewares/validate.middleware');
 
 const { User } = require('./models/index');
@@ -56,6 +57,7 @@ app.use(validateMiddleware);
 app.use('/auth', authRouter);
 app.use('/test_orm', testOrmRouter);
 app.use(authMiddleware);
+app.use(authorMiddleware);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

@@ -4,7 +4,7 @@ const { User, Provider } = require('../models/index');
 module.exports = new GoogleStrategy({
     clientID: "544176344342-o9vnp0c4c27hmmnaso9u27hdv2pdnqvr.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: "https://node-passport.vercel.app/auth/google/callback",
     scope: ['profile', 'email'],
   },
   async function(request, accessToken, refreshToken, profile, done) {

@@ -1,19 +1,27 @@
 const { User, Provider, Role, Permission, User_Role, Role_Permission } = require('../models/index');
 const { string } = require('yup');
+const error_author = require('../utils/error_author');
 
 module.exports = {
     manage_role: async (req, res) => {
+        const pers = req.permission;
+        error_author(req, res, pers.role_display);
+
         const roles = await Role.findAll({
             order: [['id', 'asc']],
         });
 
         return res.render('authorization/manage_role', {
             layout: 'layouts/admin_layout',
-            roles
+            roles,
+            pers
         });
     },
 
     create_role: async (req, res) => {
+        const pers = req.permission;
+        error_author(req, res, pers.role_create);
+
         const role_create_error = req.flash('role_create_error')[0];
         const role_create_success = req.flash('role_create_success')[0];
 
@@ -84,6 +92,9 @@ module.exports = {
     },
 
     update_role: async (req, res, next) => {
+        const pers = req.permission;
+        error_author(req, res, pers.role_edit);
+
         const { id: id_param } = req.params;
 
         try {
@@ -181,6 +192,7 @@ module.exports = {
         const { id } = req.params;
         
         const role = await Role.findByPk(id);
+        await role.setUsers([]);
         await role.setPermissions([]);
         await Role.destroy({
             where: {
